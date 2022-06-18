@@ -1,0 +1,17 @@
+{
+	"name": "discord",
+	"version": "0.1.0",
+	"dependencies": [
+		"fx[2]",
+		"vendor:discord-rpc",
+		"net",
+		"rage:nutsnbolts",
+		"gta:core",
+		"scripting",
+		"vendor:websocketpp",
+		"vendor:boost_system",
+		"vendor:cpp-url",
+		"http-client"
+	],
+	"provides": []
+}

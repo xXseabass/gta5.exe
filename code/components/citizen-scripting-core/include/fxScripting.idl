@@ -1,0 +1,182 @@
+#include "fxIBase.idl"
+
+%{C++
+#include "fxNativeContext.h"
+%}
+
+// fxIStream is here temporarily - will be moved in the future
+[ptr] native voidPtr(void);
+
+[uuid(82EC2441-DBB4-4512-81E9-3A98CE9FFCAB)]
+interface fxIStream : fxIBase
+{
+	void Read(in voidPtr data, in uint32_t size, out uint32_t bytesRead);
+
+	void Write(in voidPtr data, in uint32_t size, out uint32_t bytesWritten);
+
+	void Seek(in int64_t offset, in int32_t origin, out uint64_t newPosition);
+
+	void GetLength(out uint64_t length);
+};
+
+[ref] native NativeCtx(fxNativeContext);
+
+[uuid(8FFDC384-4767-4EA2-A935-3BFCAD1DB7BF)]
+interface IScriptHost : fxIBase
+{
+	void InvokeNative(inout NativeCtx context);
+
+	void OpenSystemFile(in charPtr fileName, out fxIStream stream);
+
+	void OpenHostFile(in charPtr fileName, out fxIStream stream);
+
+	void CanonicalizeRef(in int32_t localRef, in int32_t instanceId, out charPtr refString);
+	
+	void ScriptTrace(in charPtr message);
+
+	void SubmitBoundaryStart(in charPtr boundaryData, in int32_t boundarySize);
+
+	void SubmitBoundaryEnd(in charPtr boundaryData, in int32_t boundarySize);
+
+	void GetLastErrorText(out charPtr errorString);
+};
+
+[uuid(9568DF2D-27C8-4B9E-B29D-48272C317084)]
+interface IScriptHostWithResourceData : fxIBase
+{
+	void GetResourceName(out charPtr resourceName);
+
+	void GetNumResourceMetaData(in charPtr fieldName, out int32_t numFields);
+
+	void GetResourceMetaData(in charPtr fieldName, in int32_t fieldIndex, out charPtr fieldValue);
+};
+
+[uuid(5E212027-3AAD-46D1-97E0-B8BC5EF89E18)]
+interface IScriptHostWithManifest : fxIBase
+{
+	boolean IsManifestVersionBetween(in fxIIDRef lowerBound, in fxIIDRef upperBound);
+
+	boolean IsManifestVersionV2Between(in charPtr lowerBound, in charPtr upperBound);
+};
+
+[uuid(67B28AF1-AAF9-4368-8296-F93AFC7BDE96)]
+interface IScriptRuntime : fxIBase
+{
+	void Create(in IScriptHost scriptHost);
+
+	void Destroy();
+
+	[notxpcom] voidPtr GetParentObject();
+
+	[notxpcom] void SetParentObject(in voidPtr obj);
+
+	[notxpcom] int32_t GetInstanceId();
+};
+
+[uuid(4720A986-EAA6-4ECC-A31F-2CE2BBF569F7)]
+interface IScriptRuntimeHandler : fxIBase
+{
+	void PushRuntime(in IScriptRuntime runtime);
+
+	void GetCurrentRuntime(out IScriptRuntime runtime);
+
+	void PopRuntime(in IScriptRuntime runtime);
+
+	void GetInvokingRuntime(out IScriptRuntime runtime);
+
+	void TryPushRuntime(in IScriptRuntime runtime);
+};
+
+[uuid(91B203C7-F95A-4902-B463-722D55098366)]
+interface IScriptTickRuntime : fxIBase
+{
+	void Tick();
+};
+
+[ptr] native u64Ptr(uint64_t);
+
+[uuid(195FB3BD-1A64-4EBD-A1CC-8052ED7EB0BD)]
+interface IScriptTickRuntimeWithBookmarks : fxIBase
+{
+	void TickBookmarks(in u64Ptr bookmarks, in int32_t numBookmarks);
+};
+
+[uuid(637140DB-24E5-46BF-A8BD-08F2DBAC519A)]
+interface IScriptEventRuntime : fxIBase
+{
+	void TriggerEvent(in charPtr eventName, in charPtr argsSerialized, in uint32_t serializedSize, in charPtr sourceId);
+};
+
+[uuid(A2F1B24B-A29F-4121-8162-86901ECA8097)]
+interface IScriptRefRuntime : fxIBase
+{
+	void CallRef(in int32_t refIdx, in charPtr argsSerialized, in uint32_t argsSize, out charPtr retvalSerialized, out uint32_t retvalSize);
+
+	void DuplicateRef(in int32_t refIdx, out int32_t newRefIdx);
+
+	void RemoveRef(in int32_t refIdx);
+};
+
+[uuid(567634C6-3BDD-4D0E-AF39-7472AED479B7)]
+interface IScriptFileHandlingRuntime : fxIBase
+{
+	[notxpcom] int32_t HandlesFile(in charPtr scriptFile, in IScriptHostWithResourceData metadata);
+
+	void LoadFile(in charPtr scriptFile);
+};
+
+[uuid(182CAAF3-E33D-474B-A6AF-33D59FF0E9ED)]
+interface IScriptStackWalkVisitor : fxIBase
+{
+	void SubmitStackFrame(in charPtr frameBlob, in uint32_t frameBlobSize);
+};
+
+[uuid(567D2FDA-610C-4FA0-AE3E-4F700AE5CE56)]
+interface IScriptStackWalkingRuntime : fxIBase
+{
+	void WalkStack(in charPtr boundaryStart, in uint32_t boundaryStartLength, in charPtr boundaryEnd, in uint32_t boundaryEndLength, in IScriptStackWalkVisitor visitor);
+};
+
+[uuid(D98A35CF-D6EE-4B51-A1C3-99B70F4EC1E6)]
+interface IScriptMemInfoRuntime : fxIBase
+{
+	void RequestMemoryUsage();
+
+	int64_t GetMemoryUsage();
+};
+
+[uuid(782A4496-2AE3-4C70-B54A-FAD8FD8AEEFD)]
+interface IScriptProfiler : fxIBase
+{
+	void SetupFxProfiler(in voidPtr obj, in int32_t resourceId);
+
+	void ShutdownFxProfiler();
+};
+
+[uuid(08E68541-A1C9-4F51-8737-3C77F8AB5B21)]
+interface IDebugEventListener : fxIBase
+{
+	void OnBreakpointsDefined(in int32_t scriptId, in charPtr breakpointJson);
+};
+
+[uuid(7EB9F56A-8EBE-4BB2-B467-A6F6C099597B)]
+interface IScriptDebugRuntime : fxIBase
+{
+	void SetDebugEventListener(in IDebugEventListener listener);
+
+	void SetScriptIdentifier(in charPtr fileName, in int32_t scriptId);
+};
+
+[uuid(2A7E092D-6CE9-4B9D-AC4F-8DA818BD0DA4)]
+interface IScriptHostWithBookmarks : fxIBase
+{
+	void ScheduleBookmark(in IScriptTickRuntimeWithBookmarks runtime, in uint64_t bookmark, in int64_t deadline);
+
+	void RemoveBookmarks(in IScriptTickRuntimeWithBookmarks runtime);
+
+	void CreateBookmarks(in IScriptTickRuntimeWithBookmarks runtime);
+};
+
+%{C++
+#include "PushEnvironment.h"
+%}

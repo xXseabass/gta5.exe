@@ -1,0 +1,36 @@
+@import '../../../vars.scss';
+
+.root {
+  display: flex;
+  flex-direction: column;
+
+  gap: $q*4;
+
+  padding: $q*2;
+
+  .block {
+    display: flex;
+    flex-direction: column;
+
+    gap: $q*2;
+
+    .label {
+      display: flex;
+      align-items: center;
+
+      gap: $q;
+
+      font-size: $fs08;
+
+      user-select: none;
+    }
+
+    .control {
+      display: block;
+
+      input {
+        display: block;
+      }
+    }
+  }
+}

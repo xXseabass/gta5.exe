@@ -1,0 +1,107 @@
+@import "../../vars.scss";
+
+.root {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 0;
+  height: 0;
+
+  z-index: 1;
+
+  &.hidden {
+    .hideable {
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+  }
+}
+
+.top-left {
+  position: fixed;
+
+  top: $weToolbarOffset;
+  left: $weToolbarOffset;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  gap: $q*2;
+
+  height: 0;
+
+  z-index: 1;
+}
+
+.top-center {
+  position: fixed;
+
+  top: $weToolbarOffset;
+  left: $weToolbarOffset;
+  right: $weToolbarOffset;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: $q*2;
+
+  height: 1px;
+
+  overflow: visible;
+
+  z-index: 1;
+}
+
+.top-right {
+  position: fixed;
+
+  top: $weToolbarOffset;
+  right: $weToolbarOffset;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+
+  gap: $q*2;
+
+  height: 0;
+
+  z-index: 1;
+}
+
+.left-bottom {
+  position: fixed;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  left: $weToolbarOffset;
+  bottom: $weToolbarOffset;
+
+  height: 0;
+
+  overflow: visible;
+
+  z-index: 1;
+}
+
+.bottom {
+  position: fixed;
+
+  left: $weToolbarOffset;
+  right: $weToolbarOffset;
+  bottom: $weToolbarOffset;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  height: 0;
+
+  z-index: 1;
+}

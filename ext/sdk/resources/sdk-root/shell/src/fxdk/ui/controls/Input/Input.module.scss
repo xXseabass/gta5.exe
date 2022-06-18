@@ -1,0 +1,97 @@
+@import "variables";
+
+.root {
+  display: inline-block;
+
+  &.small {
+    .input {
+      input {
+        height: $q*7;
+        font-size: $fs08;
+      }
+    }
+  }
+
+  label {
+    width: 100%;
+
+    @include fontPrimary;
+    font-size: $fs08;
+    font-weight: 300;
+    color: rgba($fgColor, .5);
+
+    input {
+      margin-top: $q*2;
+    }
+  }
+
+  .input {
+    position: relative;
+    display: flex;
+
+    input {
+      flex-grow: 1;
+
+      width: 100%;
+
+      background-color: rgba($fgColor, .025);
+
+      height: $q*9;
+      padding: $q*3 $q*4;
+
+      color: $fgColor;
+
+      @include fontPrimary;
+      font-size: $fs1;
+
+      border: none;
+
+      box-shadow: 0 0 0 2px rgba($fgColor, .25) inset;
+
+      transition: all .2s ease;
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: .5;
+      }
+
+      &:not(:disabled) {
+        &:hover {
+          transition: none;
+
+          box-shadow: 0 0 0 2px rgba($fgColor, .5) inset;
+        }
+
+        &:focus,
+        &:focus:hover {
+          box-shadow: 0 0 0 2px $acColor inset;
+        }
+      }
+
+      &::-webkit-input-placeholder {
+        color: rgba($fgColor, .6);
+      }
+    }
+
+    .decorator {
+      position: absolute;
+
+      display: flex;
+      align-items: center;
+      gap: $q;
+
+      top: $q;
+      right: $q;
+
+      height: $q*7;
+    }
+  }
+
+  .description {
+    margin-top: $q;
+
+    color: rgba($fgColor, .5);
+    font-size: $fs08;
+    // white-space: nowrap;
+  }
+}

@@ -1,0 +1,276 @@
+[submodule "vendor/jitasm"]
+	path = vendor/jitasm
+	url = https://github.com/citizenfx/jitasm.git
+[submodule "vendor/yaml-cpp"]
+	path = vendor/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "vendor/msgpack-c"]
+	path = vendor/msgpack-c
+	url = https://github.com/msgpack/msgpack-c.git
+[submodule "vendor/zlib"]
+	path = vendor/zlib
+	url = https://github.com/madler/zlib.git
+[submodule "vendor/protobuf"]
+	path = vendor/protobuf
+	url = https://github.com/google/protobuf.git
+[submodule "vendor/breakpad"]
+	path = vendor/breakpad
+	url = https://github.com/citizenfx/breakpad.git
+[submodule "vendor/udis86"]
+	path = vendor/udis86
+	url = https://github.com/citizenfx/udis86.git
+[submodule "vendor/tinyxml2"]
+	path = vendor/tinyxml2
+	url = https://github.com/leethomason/tinyxml2.git
+[submodule "vendor/picohttpparser"]
+	path = vendor/picohttpparser
+	url = https://github.com/h2o/picohttpparser.git
+[submodule "vendor/libssh"]
+	path = vendor/libssh
+	url = https://github.com/citizenfx/libssh.git
+[submodule "vendor/xz"]
+	path = vendor/xz
+	url = https://github.com/xz-mirror/xz.git
+[submodule "vendor/curl"]
+	path = vendor/curl
+	url = https://github.com/citizenfx/curl.git
+[submodule "vendor/leveldb"]
+	path = vendor/leveldb
+	url = https://github.com/citizenfx/leveldb.git
+[submodule "vendor/minhook"]
+	path = vendor/minhook
+	url = https://github.com/citizenfx/minhook.git
+[submodule "vendor/rapidjson"]
+	path = vendor/rapidjson
+	url = https://github.com/miloyip/rapidjson.git
+[submodule "vendor/libuv"]
+	path = vendor/libuv
+	url = https://github.com/citizenfx/libuv.git
+[submodule "vendor/fmtlib"]
+	path = vendor/fmtlib
+	url = https://github.com/fmtlib/fmt.git
+[submodule "vendor/nghttp2"]
+	path = vendor/nghttp2
+	url = https://github.com/nghttp2/nghttp2.git
+[submodule "vendor/cpr"]
+	path = vendor/cpr
+	url = https://github.com/libcpr/cpr.git
+[submodule "vendor/enet"]
+	path = vendor/enet
+	url = https://github.com/freeminer/enet.git
+	branch = ipv6
+[submodule "vendor/imgui"]
+	path = vendor/imgui
+	url = https://github.com/citizenfx/imgui.git
+[submodule "vendor/tbb"]
+	path = vendor/tbb
+	url = https://github.com/citizenfx/oneTBB.git
+[submodule "vendor/cpprestsdk"]
+	path = vendor/cpprestsdk
+	url = https://github.com/Microsoft/cpprestsdk.git
+[submodule "vendor/linenoise-ng"]
+	path = vendor/linenoise-ng
+	url = https://github.com/arangodb/linenoise-ng.git
+[submodule "vendor/discord-rpc"]
+	path = vendor/discord-rpc
+	url = https://github.com/citizenfx/discord-rpc.git
+[submodule "vendor/lz4"]
+	path = vendor/lz4
+	url = https://github.com/lz4/lz4.git
+[submodule "vendor/nng"]
+	path = vendor/nng
+	url = https://github.com/nanomsg/nng.git
+[submodule "vendor/node"]
+	path = vendor/node
+	url = https://github.com/citizenfx/node.git
+[submodule "vendor/openssl"]
+	path = vendor/openssl
+	url = https://github.com/openssl/openssl.git
+[submodule "vendor/libopus"]
+	path = vendor/libopus
+	url = https://github.com/xiph/opus.git
+[submodule "vendor/libfvad"]
+	path = vendor/libfvad
+	url = https://github.com/dpirch/libfvad.git
+[submodule "vendor/webrtc-audio-processing"]
+	path = vendor/webrtc-audio-processing
+	url = https://github.com/citizenfx/webrtc-audio-processing.git
+[submodule "vendor/minizip"]
+	path = vendor/minizip
+	url = https://github.com/nmoinvaz/minizip.git
+[submodule "vendor/glm"]
+	path = vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "vendor/eastl"]
+	path = vendor/eastl
+	url = https://github.com/electronicarts/EASTL.git
+[submodule "vendor/utfcpp"]
+	path = vendor/utfcpp
+	url = https://github.com/nemtrif/utfcpp.git
+[submodule "vendor/yojimbo"]
+	path = vendor/yojimbo
+	url = https://github.com/citizenfx/yojimbo.git
+[submodule "vendor/libsodium"]
+	path = vendor/libsodium
+	url = https://github.com/jedisct1/libsodium.git
+[submodule "vendor/mbedtls"]
+	path = vendor/mbedtls
+	url = https://github.com/ARMmbed/mbedtls.git
+[submodule "vendor/netcode.io"]
+	path = vendor/netcode.io
+	url = https://github.com/citizenfx/netcode.io.git
+[submodule "vendor/reliable.io"]
+	path = vendor/reliable.io
+	url = https://github.com/citizenfx/reliable.io.git
+[submodule "vendor/websocketpp"]
+	path = vendor/websocketpp
+	url = https://github.com/citizenfx/websocketpp.git
+[submodule "vendor/slikenet"]
+	path = vendor/slikenet
+	url = https://github.com/SLikeSoft/SLikeNet.git
+[submodule "vendor/replxx"]
+	path = vendor/replxx
+	url = https://github.com/blattersturm/replxx.git
+[submodule "vendor/thread-pool-cpp"]
+	path = vendor/thread-pool-cpp
+	url = https://github.com/inkooboo/thread-pool-cpp.git
+[submodule "vendor/ben-demystifier"]
+	path = vendor/ben-demystifier
+	url = https://github.com/citizenfx/Ben.Demystifier.git
+[submodule "vendor/cpp-url"]
+	path = vendor/cpp-url
+	url = https://github.com/cpp-netlib/url.git
+[submodule "vendor/uvw"]
+	path = vendor/uvw
+	url = https://github.com/citizenfx/uvw.git
+[submodule "vendor/uws"]
+	path = vendor/uws
+	url = https://github.com/uNetworking/uWebSockets.git
+[submodule "vendor/uSockets"]
+	path = vendor/uSockets
+	url = https://github.com/uNetworking/uSockets.git
+[submodule "vendor/toojpeg"]
+	path = vendor/toojpeg
+	url = https://github.com/stbrumme/toojpeg.git
+[submodule "vendor/bgfx"]
+	path = vendor/bgfx
+	url = https://github.com/citizenfx/bgfx.git
+[submodule "vendor/bx"]
+	path = vendor/bx
+	url = https://github.com/bkaradzic/bx.git
+[submodule "vendor/bimg"]
+	path = vendor/bimg
+	url = https://github.com/bkaradzic/bimg.git
+[submodule "vendor/nngpp"]
+	path = vendor/nngpp
+	url = https://github.com/citizenfx/nngpp.git
+[submodule "vendor/vulkan-headers"]
+	path = vendor/vulkan-headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers.git
+[submodule "vendor/grpc"]
+	path = vendor/grpc
+	url = https://github.com/grpc/grpc.git
+[submodule "vendor/librw"]
+	path = vendor/librw
+	url = https://github.com/blattersturm/librw.git
+[submodule "vendor/librwgta"]
+	path = vendor/librwgta
+	url = https://github.com/aap/librwgta.git
+[submodule "vendor/labsound"]
+	path = vendor/labsound
+	url = https://github.com/LabSound/LabSound
+[submodule "vendor/libnyquist"]
+	path = vendor/libnyquist
+	url = https://github.com/ddiakopoulos/libnyquist.git
+[submodule "ext/txAdmin"]
+	path = ext/txAdmin
+	url = https://github.com/citizenfx/txAdmin.git
+[submodule "vendor/prometheus-cpp"]
+	path = vendor/prometheus-cpp
+	url = https://github.com/jupp0r/prometheus-cpp.git
+[submodule "vendor/folly"]
+	path = vendor/folly
+	url = https://github.com/facebook/folly.git
+[submodule "ext/native-doc-tooling"]
+	path = ext/native-doc-tooling
+	url = https://github.com/citizenfx/native-doc-tooling
+[submodule "vendor/concurrentqueue"]
+	path = vendor/concurrentqueue
+	url = https://github.com/cameron314/concurrentqueue.git
+[submodule "vendor/xenium"]
+	path = vendor/xenium
+	url = https://github.com/citizenfx/xenium.git
+[submodule "vendor/rocksdb"]
+	path = vendor/rocksdb
+	url = https://github.com/facebook/rocksdb.git
+[submodule "vendor/ngtcp2"]
+	path = vendor/ngtcp2
+	url = https://github.com/ngtcp2/ngtcp2.git
+[submodule "vendor/nghttp3"]
+	path = vendor/nghttp3
+	url = https://github.com/ngtcp2/nghttp3.git
+[submodule "vendor/lua-cmsgpack"]
+	path = vendor/lua-cmsgpack
+	url = https://github.com/citizenfx/lua-cmsgpack.git
+	branch = grit
+[submodule "vendor/lua-rapidjson"]
+	path = vendor/lua-rapidjson
+	url = https://github.com/citizenfx/lua-rapidjson.git
+	branch = grit
+[submodule "vendor/lua"]
+	path = vendor/lua
+	url = https://github.com/citizenfx/lua.git
+	branch = luaglm-dev/cfx
+[submodule "vendor/tinygltf"]
+	path = vendor/tinygltf
+	url = https://github.com/syoyo/tinygltf.git
+[submodule "vendor/lss"]
+	path = vendor/lss
+	url = https://chromium.googlesource.com/linux-syscall-support/
+[submodule "vendor/range-v3"]
+	path = vendor/range-v3
+	url = https://github.com/ericniebler/range-v3.git
+[submodule "vendor/eabase"]
+	path = vendor/eabase
+	url = https://github.com/electronicarts/EABase.git
+[submodule "vendor/directxtex"]
+	path = vendor/directxtex
+	url = https://github.com/microsoft/DirectXTex.git
+[submodule "vendor/dspfilters"]
+	path = vendor/dspfilters
+	url = https://github.com/thorwe/DSPFilters.git
+[submodule "vendor/hdiffpatch"]
+	path = vendor/hdiffpatch
+	url = https://github.com/sisong/HDiffPatch.git
+[submodule "vendor/speexdsp"]
+	path = vendor/speexdsp
+	url = https://github.com/xiph/speexdsp.git
+[submodule "vendor/fx11"]
+	path = vendor/fx11
+	url = https://github.com/microsoft/FX11
+[submodule "vendor/im3d"]
+	path = vendor/im3d
+	url = https://github.com/john-chapman/im3d.git
+[submodule "vendor/lmprof"]
+	path = vendor/lmprof
+	url = https://github.com/citizenfx/lmprof.git
+	branch = grit
+[submodule "vendor/rpmalloc"]
+	path = vendor/rpmalloc
+	url = https://github.com/citizenfx/rpmalloc.git
+	branch = lua
+[submodule "vendor/wil"]
+	path = vendor/wil
+	url = https://github.com/microsoft/wil.git
+[submodule "vendor/jwt-cpp"]
+	path = vendor/jwt-cpp
+	url = https://github.com/Thalhammer/jwt-cpp.git
+[submodule "ext/sdk/resources/sdk-root/fxcode"]
+	path = ext/sdk/resources/sdk-root/fxcode
+	url = https://github.com/citizenfx/fxcode.git
+[submodule "vendor/zstd"]
+	path = vendor/zstd
+	url = https://github.com/facebook/zstd.git
+[submodule "vendor/freetype"]
+	path = vendor/freetype
+	url = https://github.com/freetype/freetype.git

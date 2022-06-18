@@ -1,0 +1,15 @@
+{
+	"name": "citizen:mod-loader:five",
+	"version": "0.1.0",
+	"dependencies": [
+		"fx[2]",
+		"citizen:resources:client",
+		"gta:core",
+		"gta:game",
+		"gta:streaming",
+		"vfs:core",
+		"font-renderer",
+		"vendor:tinyxml2-dll"
+	],
+	"provides": []
+}

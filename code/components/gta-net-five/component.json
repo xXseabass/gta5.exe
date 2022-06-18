@@ -1,0 +1,22 @@
+{
+	"name": "gta:net:five",
+	"version": "0.1.0",
+	"dependencies": [
+		"fx[2]",
+		"net:base",
+		"net",
+		"voip:mumble",
+		"gta:core:five",
+		"gta:game:five",
+		"gta:streaming:five",
+		"rage:nutsnbolts:five",
+		"citizen:resources:core",
+		"citizen:scripting:core",
+		"scripting",
+		"vendor:msgpack-c",
+		"vendor:lz4",
+		"vendor:imgui",
+		"conhost"
+	],
+	"provides": []
+}

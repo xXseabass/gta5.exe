@@ -1,0 +1,13 @@
+{
+	"name": "tool:formats",
+	"version": "0.1.0",
+	"dependencies": [
+		"fx[2]",
+		"rage:formats:x",
+		"vendor:boost_filesystem",
+		"vendor:boost_program_options",
+		"vendor:tinygltf",
+		"vendor:fx11"
+	],
+	"provides": []
+}

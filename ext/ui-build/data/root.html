@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title>CitizenFX root UI</title>
+<style type="text/css">
+body
+{
+	background-color: transparent;
+	margin: 0px;
+	padding: 0px;
+}
+
+iframe
+{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	border: 0px;
+	width: 100%;
+	height: 100%;
+}
+</style>
+<script type="text/javascript">
+window.citFrames = {};
+
+/**
+ * @type string[]
+ */
+let zStack = [];
+
+/**
+ * @type string[]
+ */
+let focusStack = [];
+
+let handoverBlob = {};
+let serverAddress = '';
+let frameEscapeFunctions = {};
+
+registerPushFunction(function(type, ...args) {
+	switch (type) {
+		case 'rootCall': {
+			const [ dataString ] = args;
+			const data = JSON.parse(dataString);
+
+			if (data.type == 'focusFrame') {
+				focusFrame(data.frameName);
+			} else if (data.type == 'blurFrame') {
+				blurFrame(data.frameName);
+			} else if (data.type == 'setHandover') {
+				handoverBlob = data.data;
+			} else if (data.type == 'setServerAddress') {
+				serverAddress = data.data;
+			}
+			break;
+		}
+		case 'frameCall': {
+			const [ frameName, dataString ] = args;
+			const data = JSON.parse(dataString);
+
+			if (!(frameName in citFrames)) {
+				return;
+			}
+
+			citFrames[frameName]?.contentWindow?.postMessage(data, '*');
+
+			break;
+		}
+	}
+});
+
+registerFrameFunction(function(msg, frameName, frameUrl)
+{
+	if (msg == "createFrame")
+	{
+		const frame = document.createElement('iframe');
+		frame.name = frameName;
+		frame.style.visibility = 'hidden';
+		frame.allow = 'microphone *; camera *;';
+		frame.src = frameUrl;
+		frame.tabIndex = -1;
+
+		citFrames[frameName] = frame;
+		zStack.push(frameName);
+
+		const curElement = document.activeElement;
+		const hadFocus = (curElement?.tagName.toUpperCase() === 'IFRAME');
+		
+		document.body.appendChild(frame);
+
+		if (hadFocus) {
+			frame.blur();
+			curElement.focus();
+		}
+
+		frame.contentWindow.addEventListener('DOMContentLoaded', function()
+		{
+			frame.style.visibility = 'visible';
+		}, true);
+		
+		frameEscapeFunctions[frameName] = () => {
+			setTimeout(() => {
+				if (document.activeElement == document.body) {
+					frame.contentWindow.focus();
+				}
+			}, 32);
+		}
+
+		frame.contentWindow.GetParentResourceName = function()
+		{
+			return frameName;
+		}
+		
+		if (frameName === 'loadingScreen')
+		{
+			frame.contentWindow.nuiHandoverData = handoverBlob || {};
+			frame.contentWindow.nuiHandoverData.serverAddress = serverAddress;
+		}
+	}
+	else if (msg == "destroyFrame")
+	{
+		if (!(frameName in citFrames))
+		{
+			return;
+		}
+
+		zStack = zStack.filter(val => val !== frameName);
+		
+		// bye!
+		document.body.removeChild(citFrames[frameName]);
+		delete citFrames[frameName];
+	}
+});
+
+registerPollFunction(function(frameName)
+{
+	if (!(frameName in citFrames))
+	{
+		return;
+	}
+	
+	const frame = citFrames[frameName];
+	frame?.contentWindow.postMessage({ type: 'poll' }, '*');
+});
+
+focusFrame = function(frameName)
+{
+	// rearrange the z/focus stacks
+	zStack = zStack.filter(val => val !== frameName);
+	zStack.push(frameName);
+
+	focusStack = focusStack.filter(val => val !== frameName);
+	focusStack.splice(0, 0, frameName);
+
+	// iterate the z order array
+	for (let i = 0; i < zStack.length; i++)
+	{
+		const thisFrame = citFrames[zStack[i]];
+		if (thisFrame) {
+			thisFrame.style.zIndex = i.toString();
+		}
+	}
+
+	const curFrame = citFrames[frameName];
+
+	if (curFrame) {
+		// set our z index to topmost
+		curFrame.style.zIndex = 99999;
+
+		// register blur event for unintentional tab escapes
+		curFrame.contentWindow.addEventListener("blur", frameEscapeFunctions[frameName]);
+		// and focus the frame itself
+		curFrame.contentWindow.focus();
+	}
+};
+
+blurFrame = function(frameName)
+{
+	const curFrame = citFrames[frameName];
+	focusStack = focusStack.filter(val => val !== frameName);
+
+	if (curFrame) {
+		// intentional blur, remove blur listener
+		curFrame.contentWindow.removeEventListener("blur", frameEscapeFunctions[frameName]);
+		// remove focus
+		curFrame.contentWindow.blur();
+	}
+
+	// refocus the top frame in the focus stack, if any
+	if (focusStack.length >= 1) {
+		focusFrame(focusStack[0]);
+	}
+};
+</script>
+</head>
+<body>
+</body>
+</html>

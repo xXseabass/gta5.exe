@@ -1,0 +1,13 @@
+{
+	"name": "lovely-script",
+	"version": "0.1.0",
+	"dependencies": [
+		"fx[2]",
+		"rage:scripting",
+		"gta:mission-cleanup",
+		"font-renderer",
+		"steam",
+		"net"
+	],
+	"provides": []
+}

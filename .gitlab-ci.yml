@@ -1,0 +1,281 @@
+# ------------
+# -- STAGES --
+# ------------
+stages:
+  - build
+  - deploy
+  - postdeploy
+
+# --------------------------
+# -- SHARED WINDOWS BUILD --
+# --------------------------
+.build_windows:
+  stage: build
+  script:
+    - ".\\code\\tools\\ci\\build.ps1 -DontUpload $true"
+  variables:
+    IS_LAUNCHER: '0'
+  except:
+    - tags
+
+.build_client:
+  extends: .build_windows
+  variables:
+    GIT_CLONE_PATH: $CI_BUILDS_DIR\$CI_BUILD_REF_NAME\fivem
+  artifacts:
+    paths:
+      - caches/
+      - ext/native-doc-gen/natives_cfx.json
+    expire_in: 1 month
+  cache:
+    key: $CI_JOB_NAME-$CI_BUILD_REF_NAME
+    untracked: true
+    paths:
+      - code/shared/citversion.h
+      - code/shared/launcher_version.h
+      - code/build/
+
+# -------------------
+# -- WINDOWS BUILD --
+# -------------------
+build_client:
+  extends: .build_client
+  tags:
+    - client
+    - vs2017
+  variables:
+    IS_FXSERVER: '0'
+
+build_client_rdr3:
+  extends: .build_client
+  tags:
+    - client2
+    - vs2017
+  variables:
+    IS_FXSERVER: '0'
+    IS_RDR3: '1'
+
+build_server_windows:
+  extends: .build_windows
+  tags:
+    - server
+    - vs2017
+  variables:
+    IS_FXSERVER: '1'
+  artifacts:
+    paths:
+      - out/server.zip
+      - out/server.7z
+    expire_in: 1 month
+  cache:
+    key: server
+    untracked: true
+
+build_sdk:
+  stage: build
+  tags:
+    - sdk
+  artifacts:
+    paths:
+      - caches/
+      - caches/caches_sdk.xml
+    expire_in: 1 month
+  cache:
+    key: sdk
+  except:
+    - tags
+  script:
+    - ".\\code\\tools\\ci\\build_sdk.ps1"
+
+# -----------------
+# -- LINUX BUILD --
+# -----------------
+build_proot_linux:
+  stage: build
+  image: mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.13
+  variables:
+    GIT_SUBMODULE_STRATEGY: normal
+    # workaround gitlab-ci-multi-runner#2148
+    GIT_SSL_CAPATH: /etc/ssl/certs/
+    DOCKER_TLS_CERTDIR: ""
+  script: 
+    - sh code/tools/ci/build_server_proot.sh
+  artifacts:
+    paths:
+      - fx.tar.xz
+    expire_in: 1 month
+  except:
+    - tags
+  tags:
+    - linux
+
+# -------------------
+# -- CLIENT DEPLOY --
+# -------------------
+
+.deploy:
+  stage: deploy
+  variables:
+    GIT_CLONE_PATH: $CI_BUILDS_DIR\$CI_BUILD_REF_NAME\fivem
+  script:
+    - ".\\code\\tools\\ci\\build.ps1 -DontBuild $true"
+
+.deploy_five:
+  extends: .deploy
+  tags:
+    - vs2017
+    - client
+  needs:
+    - job: build_client
+      artifacts: true
+    - job: build_sdk
+      artifacts: true
+
+.deploy_rdr3:
+  extends: .deploy
+  tags:
+    - vs2017
+    - client2
+  needs:
+    - job: build_client_rdr3
+      artifacts: true
+  variables:
+    IS_RDR3: '1'
+
+.deploy_specific:
+  environment:
+    name: specific/$CI_BUILD_REF_NAME
+  only:
+    - branches
+  except:
+    - master
+    - tags
+
+.deploy_manual:
+  when: manual
+  only:
+   - master
+
+.deploy_canary:
+  environment:
+    name: canary
+  only:
+    - master
+
+# -------------------------
+# -- CLIENT DEPLOY IMPLS --
+# -------------------------
+deploy_specific:
+  extends: [.deploy_five, .deploy_specific]
+    
+deploy_rdr3_specific:
+  extends: [.deploy_rdr3, .deploy_specific]
+
+deploy_canary:
+  extends: [.deploy_five, .deploy_canary]
+
+deploy_canary_rdr3:
+  extends: [.deploy_rdr3, .deploy_canary]
+
+deploy_beta:
+  extends: [.deploy_five, .deploy_manual]
+  environment:
+    name: beta
+
+deploy_beta_rdr3:
+  extends: [.deploy_rdr3, .deploy_manual]
+  environment:
+    name: beta
+
+deploy_prod:
+  extends: [.deploy_five, .deploy_manual]
+  environment:
+    name: production
+
+deploy_prod_rdr3:
+  extends: [.deploy_rdr3, .deploy_manual]
+  environment:
+    name: production
+
+# -------------------
+# -- ScRT PACKAGES --
+# -------------------
+typings_server:
+  stage: deploy
+  needs:
+    - job: build_server_windows
+      artifacts: true
+  image: node:alpine
+  tags:
+    - linux
+  only:
+    - master
+  variables:
+    GIT_SUBMODULE_STRATEGY: normal
+    # workaround gitlab-ci-multi-runner#2148
+    GIT_SSL_CAPATH: /etc/ssl/certs/
+  script:
+    - sh ext/typings/server/build.sh
+    
+typings_client:
+  stage: deploy
+  needs:
+    - job: build_client
+      artifacts: true
+  tags:
+    - vs2017
+  only:
+    - master
+  script:
+    - "cmd /c ext\\typings\\client\\build.bat"
+    
+nuget_client:
+  stage: deploy
+  needs:
+    - job: build_client
+      artifacts: true
+  tags:
+    - vs2017
+  only:
+    - master
+  script:
+    - "cmd /c ext\\nuget\\client\\build.bat"
+    
+nuget_server:
+  stage: deploy
+  needs:
+    - job: build_server_windows
+      artifacts: true
+  tags:
+    - vs2017
+  only:
+    - master
+  script:
+    - "cmd /c ext\\nuget\\server\\build.bat"
+
+# ------------------------
+# -- SHARED POST-DEPLOY --
+# ------------------------
+
+.upload_review:
+  stage: postdeploy
+  variables:
+    GIT_CLONE_PATH: $CI_BUILDS_DIR\$CI_BUILD_REF_NAME\fivem
+  script:
+    - ".\\code\\tools\\ci\\upload_review.ps1"
+  tags:
+    - vs2017
+  only:
+    - master
+
+upload_review:
+  extends: .upload_review
+  needs:
+    - job: build_client
+      artifacts: true
+
+upload_review_rdr3:
+  extends: .upload_review
+  needs:
+    - job: build_client_rdr3
+      artifacts: true

@@ -1,0 +1,25 @@
+{
+	"name": "gta:net:rdr3",
+	"version": "0.1.0",
+	"dependencies": [
+		"fx[2]",
+		"net:base",
+		"net",
+		"gta:core",
+		"gta:game",
+		"rage:scripting",
+		"gta:streaming",
+		"rage:nutsnbolts",
+		"citizen:resources:core",
+		"citizen:scripting:core",
+		"ros-patches",
+		"voip:mumble",
+		"vendor:websocketpp",
+		"vendor:protobuf_lite",
+		"vendor:msgpack-c",
+		"vendor:lz4",
+		"vendor:imgui",
+		"conhost"
+	],
+	"provides": []
+}

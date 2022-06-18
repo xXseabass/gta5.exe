@@ -1,0 +1,90 @@
+@import "../../../vars.scss";
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: $weToolbarHeight;
+  height: $weToolbarHeight;
+
+  color: rgba($fgColor, .75);
+  font-size: $fs2;
+
+  background-color: rgba($bgColor, .5);
+  backdrop-filter: blur(20px);
+
+  border: none;
+  border-radius: $weToolbarHeight;
+
+  box-shadow: 0 0 0 1px rgba($bgColor, .5) inset, 0 0 5px 0 rgba($bgColor, .5);
+
+  cursor: pointer;
+
+  @include interactiveTransition;
+
+  &.active {
+    color: $fgColor;
+    background-color: $acColor;
+  }
+
+  &.highlight {
+    color: $scColor;
+  }
+
+  &.hoverable {
+    &:hover {
+      color: $fgColor;
+      box-shadow: 0 0 0 2px $acColor inset, 0 0 5px 0 rgba($bgColor, .5);
+    }
+  }
+}
+
+.panel,
+.panel-alike {
+  padding: 1px;
+
+  background-color: rgba($bgColor, .75);
+  backdrop-filter: blur(20px);
+
+  box-shadow: 0 0 0 1px rgba($bgColor, .5) inset, 0 -2px 0 $acColor, 0 0 10px 0 rgba($bgColor, .75);
+}
+
+.panel {
+  position: fixed;
+
+  $topOffset: $weToolbarOffset + $weToolbarHeight + $wePanelOffset;
+
+  top: $weToolbarOffset + $weToolbarHeight + $wePanelOffset;
+  left: $weToolbarOffset;
+
+  max-height: $wePanelHeight;
+  overflow-y: auto;
+
+  width: $wePanelWidth;
+
+  opacity: 0;
+  pointer-events: none;
+
+  &.right {
+    left: auto;
+    right: $weToolbarOffset;
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+
+    @keyframes appearance {
+      0% {
+        opacity: 0;
+        transform: translateY(#{-1 * $wePanelOffset});
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    animation: appearance .2s ease;
+  }
+}

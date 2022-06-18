@@ -1,0 +1,12 @@
+{
+	"name": "citizen:legacy-net:resources",
+	"version": "0.1.0",
+	"dependencies": [
+		"fx[2]",
+		"net",
+		"citizen:resources:client",
+		"scripting",
+		"rage:nutsnbolts"
+	],
+	"provides": []
+}

@@ -1,0 +1,21 @@
+{
+	"name": "extra-natives:five",
+	"version": "0.1.0",
+	"dependencies": [
+		"fx[2]",
+		"scripting",
+		"gta:core:five",
+		"gta:game:five",
+		"gta:streaming:five",
+		"rage:graphics:five",
+		"scrbind:base",
+		"citizen:scripting:core",
+		"nui:core",
+		"citizen:resources:client",
+		"net",
+		"voip:mumble",
+		"vendor:directxtex",
+		"vendor:im3d"
+	],
+	"provides": []
+}

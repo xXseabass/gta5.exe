@@ -1,0 +1,14 @@
+{
+	"name": "citizen:resources:core",
+	"version": "0.1.0",
+	"dependencies": [
+		"fx[2]",
+		"vendor:cpp-url",
+		"vendor:msgpack-c",
+		"vendor:pplx",
+		"vendor:tbb",
+		"vendor:boost_system",
+		"vfs:core"
+	],
+	"provides": []
+}
